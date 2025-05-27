@@ -1,289 +1,191 @@
-# Electron Tracks in Time Projection Chambers (TPCs)
+# 📘 Notebook 1 — Exploring Raw Electron Tracks
 
-**Goal**:  
-Introduce electron tracks, their representation, and basic visualization.
-
-## What is an Electron Track?
-
-An electron track is the path electrons take as they travel through a detector medium (e.g., Liquid Argon). These electrons leave ionization trails, allowing us to reconstruct particle interactions like Compton scattering or pair production.
-
-**Key concepts**:
-- Electron positions (3D)
-- Charge (number of electrons at each position)
-- Interaction type (Compton or Pair production)
+**Audience**: Senior undergraduates with Python experience  
+**Goal**: Get familiar with electron track data: structure, scale, and visual appearance  
+**Scope**: Load raw tracks, visualize them in 3D, explore how energy and topology relate
 
 ---
 
-## Loading & Exploring Track Data
+## 🧠 Background
 
-Let's load some example data:
+Each track in this dataset is a result of simulating an electron traveling through a Time Projection Chamber (TPC).  
+You're given:
+- 3D spatial information of charge deposition (`r`)
+- Associated charge at each point (`num_e`)
+- Ground truth origin and direction (from `.pickle` metadata)
+- A `Tracks` object to abstract loading and processing
 
-```python
-import numpy as np
+We will **explore raw tracks**, without drift simulation or readout applied.
 
-# Load example electron track
-data = np.load("example_data/electrons/E0020000/TrackE0020000_00001.npz")
-positions = data['r']  # (3, N)
-charges = data['num_e']  # (N,)
+---
 
-print(f"Positions shape: {positions.shape}")
-print(f"Charges shape: {charges.shape}")
+## 📂 Directory Overview
+
+```
+
+example\_data/
+└── electrons/
+├── E0000100/   ← 100 keV
+├── E0001000/   ← 1 MeV
+└── E0050000/   ← 5 MeV
+
 ````
 
-* **Question**: What do you expect from the shapes printed above?
+Each subfolder contains:
+- `.npz` files with compressed or raw track data
+- `.pickle` files with truth metadata
 
 ---
 
-## Visualizing a Track (Basic)
-
-Let's visualize the points in 3D space:
+## ⚙️ Setup
 
 ```python
-import matplotlib.pyplot as plt
-
-fig = plt.figure(figsize=(8,6))
-ax = fig.add_subplot(111, projection='3d')
-
-# Plot points
-ax.scatter(positions[0], positions[1], positions[2], 
-           c=charges, cmap='viridis', s=1)
-
-ax.set_xlabel('X (m)')
-ax.set_ylabel('Y (m)')
-ax.set_zlabel('Z (m)')
-ax.set_title('Electron Track: Position colored by charge')
-
-plt.show()
-```
-
-* **Challenge**: Adjust the point size or alpha transparency to better visualize dense regions.
-
----
-
-## Interactive Problem
-
-**Problem**:
-
-* Can you calculate the total number of electrons in the track?
-* Where do you think the interaction started (head of track)?
-
-```python
-# Your code here:
-total_electrons = ___
-
-print(f"Total electrons: {total_electrons}")
-```
-
-
----
-
-# Summary
-
-You've learned:
-
-* What electron tracks represent
-* How to load and visualize basic electron track data
-* How to interpret the track visually
-
-Next, you'll learn about clustering and identifying the track head!
-
-
-# === Notebook 2: Clustering & Identifying the Electron Track Head ===
-
-## Electron Track Analysis: Clustering and Track Head Identification
-
-**Goal**:  
-Learn to use clustering (DBSCAN) to identify important track features.
-
----
-
-## What is Clustering?
-
-Clustering groups nearby points based on spatial proximity. We’ll use **DBSCAN** to find dense regions representing real electron interactions.
-
----
-
-## Load and visualize your track first:
-
-```python
+import os
+import glob
+import pickle
 import numpy as np
 import matplotlib.pyplot as plt
+from Gampy.tools import tracks_tools
 
-data = np.load("example_data/electrons/E0020000/TrackE0020000_00001.npz")
-positions = data['r'].T
-charges = data['num_e']
-
-fig = plt.figure()
-ax = fig.add_subplot(111, projection='3d')
-ax.scatter(positions[:,0], positions[:,1], positions[:,2], s=1)
-ax.set_title("Raw Electron Track")
-plt.show()
+# Choose an electron track at 1 MeV
+folder = 'example_data/electrons/E0001000'
+filename = glob.glob(os.path.join(folder, 'TrackE*.npz'))[0]
 ````
 
 ---
 
-## Apply DBSCAN clustering:
+## 📦 Load the Track
 
 ```python
-from sklearn.cluster import DBSCAN
+# Extract energy from filename
+energy = int(filename.split("TrackE")[1].split("_")[0])
 
-eps = 0.002
-min_samples = 20
+# Load track data
+track = tracks_tools.Tracks(filename.rstrip('.npz'))
 
-db = DBSCAN(eps=eps, min_samples=min_samples).fit(positions)
-labels = db.labels_
-
-print(f"Cluster labels: {set(labels)}")
+# Load ground truth
+pkl_name = filename.replace('.npz', '.pickle').replace('.c.pickle', '.pickle')
+with open(pkl_name, 'rb') as f:
+    data = pickle.load(f)['truth']
+    origin = data['origin']
+    direction = data['initial_direction']
+    num_electrons = data['num_electrons']
+    first_interaction = data.get('first_interaction', 'compton')
+    if first_interaction not in ['pair', 'compton']:
+        first_interaction = 'compton'
 ```
-
-* **Question**: How many clusters did you identify?
 
 ---
 
-## Visualizing Clusters
+## 🔍 Inspect the Track Data
 
 ```python
-fig = plt.figure()
+positions = track.raw['r']         # shape (3, N)
+charges = track.raw['num_e']       # shape (N,)
+positions = positions.T            # shape (N, 3)
+
+print(f"Track energy: {energy/1000:.1f} MeV")
+print(f"Number of points: {positions.shape[0]}")
+print(f"Total charge: {charges.sum():.1f} e⁻")
+```
+
+---
+
+## 🧭 3D Visualization
+
+```python
+fig = plt.figure(figsize=(8, 6))
 ax = fig.add_subplot(111, projection='3d')
 
-for label in set(labels):
-    cluster_points = positions[labels == label]
-    ax.scatter(cluster_points[:,0], cluster_points[:,1], cluster_points[:,2], 
-               s=1, label=f'Cluster {label}')
+sc = ax.scatter(positions[:,0], positions[:,1], positions[:,2],
+                c=charges, cmap='plasma', s=2, alpha=0.8)
 
-ax.legend()
+ax.set_title(f"{energy/1000:.1f} MeV Electron Track — Raw")
+ax.set_xlabel("X (m)"); ax.set_ylabel("Y (m)"); ax.set_zlabel("Z (m)")
+plt.colorbar(sc, label="Charge (e⁻)")
 plt.show()
 ```
 
-* **Challenge**: Adjust `eps` and `min_samples` to get fewer/more clusters. What happens?
-
 ---
 
-## Finding the Track Head (Analytical)
+## 🧠 Challenge 1 — Total Charge
 
-The track head is usually closest to the interaction origin.
-
-**Problem**: Assume the head is the point closest to `(0,0,0)`.
+**Task**:
+Calculate the total charge in this track and compare it with the `num_electrons` value from the pickle.
 
 ```python
-distances = np.linalg.norm(positions, axis=1)
-head_index = np.argmin(distances)
-track_head = positions[head_index]
-
-print(f"Track head position: {track_head}")
+total_from_data = charges.sum()
+print(f"From track: {total_from_data:.1f} e⁻")
+print(f"From truth: {num_electrons:.1f} e⁻")
 ```
 
-* **Question**: Is this a reliable assumption? Why or why not?
+* Are they close? Why might they differ slightly?
 
 ---
 
-# Summary
+## 🧠 Challenge 2 — Shape vs Energy
 
-You've learned:
-
-* How clustering groups electron track points
-* Basic track head identification methods
-
-Next, you'll simulate drift and understand TPC readout better!
-
-
-# === Notebook 3: Simulating Drift and TPC Readout ===
-
-
-## Electron Tracks: Drift Simulation & TPC Readout
-
-**Goal**:  
-Understand electron drift in TPCs and its effect on track data.
-
----
-
-## Why Drift?
-
-In a Time Projection Chamber (TPC), electrons drift under an electric field toward a readout plane. This drift affects the positions we observe.
-
----
-
-## Simulating Drift
-
-Assume a simple drift along the Z-axis:
+Explore how the shape of tracks changes with energy:
 
 ```python
-positions_drifted = positions.copy()
-drift_length = 0.05  # 5 cm drift
-positions_drifted[:,2] += drift_length
+energies = [100, 1000, 5000]
+folders = [f"example_data/electrons/E{e:07d}" for e in energies]
 
-fig = plt.figure(figsize=(8,6))
-ax = fig.add_subplot(111, projection='3d')
-ax.scatter(positions[:,0], positions[:,1], positions[:,2], s=1, alpha=0.3, label='Original')
-ax.scatter(positions_drifted[:,0], positions_drifted[:,1], positions_drifted[:,2], 
-           s=1, alpha=0.5, label='Drifted')
+fig = plt.figure(figsize=(15, 5))
 
-ax.legend()
-ax.set_title('Track Before and After Drift')
-plt.show()
-````
+for i, folder in enumerate(folders):
+    file = glob.glob(os.path.join(folder, 'TrackE*.npz'))[0]
+    track = tracks_tools.Tracks(file.rstrip('.npz'))
+    pos = track.raw['r'].T
+    ch = track.raw['num_e']
+    
+    ax = fig.add_subplot(1, 3, i+1, projection='3d')
+    ax.scatter(pos[:,0], pos[:,1], pos[:,2], c=ch, cmap='inferno', s=1)
+    ax.set_title(f"{energies[i]/1000:.1f} MeV")
+    ax.set_xlabel("X"); ax.set_ylabel("Y"); ax.set_zlabel("Z")
 
-* **Question**: How does drift affect your track visualization?
-
----
-
-## TPC Readout (Pixelated)
-
-Simulate a pixelated sensor (like GAMPix):
-
-```python
-pixel_size = 0.005  # 5mm pixels
-
-# Simulate pixel readout (simple discretization)
-pixel_x = np.round(positions_drifted[:,0] / pixel_size) * pixel_size
-pixel_y = np.round(positions_drifted[:,1] / pixel_size) * pixel_size
-pixel_z = np.round(positions_drifted[:,2] / pixel_size) * pixel_size
-
-fig = plt.figure()
-ax = fig.add_subplot(111, projection='3d')
-ax.scatter(pixel_x, pixel_y, pixel_z, s=1)
-ax.set_title("Pixelated Readout")
+plt.suptitle("Raw Electron Tracks at Different Energies")
+plt.tight_layout()
 plt.show()
 ```
 
-* **Challenge**: Try different pixel sizes and observe changes in resolution.
+* What trends do you observe?
+
+  * Do higher-energy tracks have more scatter?
+  * How does the track length or spread change?
 
 ---
 
-## Interactive Problem
+## 🧠 Challenge 3 — Bounding Box & Spatial Extent
 
-* **Problem**: Calculate the number of unique pixels triggered. How does this compare to original points?
+Measure the physical size of a track.
 
 ```python
-unique_pixels = np.unique(np.column_stack((pixel_x, pixel_y, pixel_z)), axis=0)
-print(f"Unique pixels triggered: {len(unique_pixels)}")
+extent = positions.max(axis=0) - positions.min(axis=0)
+print(f"Track extent (X, Y, Z) in meters: {extent}")
 ```
 
-* **Question**: What happens to your resolution as the pixel size grows?
+* Which axis has the greatest extent? Why might that be?
 
 ---
 
-## Final Thoughts & Challenges
+## 📝 Wrap-Up
 
-* Electron drift smears out details.
-* Pixel size affects resolution.
+By now you should:
 
-**Open Problem**:
-
-* How would you reconstruct the original electron path from the pixel data alone?
-
-Discuss and brainstorm ideas!
+* Know how to open and inspect a track
+* Understand what the `track.raw` data structure provides
+* Visualize tracks in 3D with charge color-mapping
+* Appreciate how track topology scales with energy
 
 ---
 
-# Summary
+## 🚀 Next Step
 
-You've learned:
+In the next notebook, you'll:
 
-* Drift effects and TPC readout basics
-* Pixelation resolution impacts on electron tracks
+* Cluster raw data to isolate primary tracks
+* Identify and locate the **track head**
+* Prepare tracks for drift simulation and ML input
 
-You're now ready to build ML models to predict track direction and origin!
-
-
-
+```
