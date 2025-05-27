@@ -11,11 +11,7 @@ This work builds on the concepts and detector technology described in:
 
 ## 🔍 Purpose
 
-This repository supports a focused research study in **Summer–Fall 2025**, involving:
-
-- **Sam Jett** (lead ML developer)
-- **Two Bosnian students** (online research interns)
-- **Project lead**: Bahrudin Trbalić
+This repository supports a focused research study in **Summer–Fall 2025**
 
 Our aim is to improve reconstruction and understanding of **electron track head location** and **initial direction**, especially in the **Compton** and **Pair Production** regimes (> 0.1 MeV).
 
