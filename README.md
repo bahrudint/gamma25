@@ -75,6 +75,13 @@ git clone https://github.com/tashutt/gamma25.git
 cd gamma25
 pip install -r requirements.txt
 ```
+and for Gampy
+
+```bash
+git clone https://github.com/tashutt/Gampy.git
+cd Gampy
+pip install -e .
+```
 
 ## 🧪 Getting Started
 
