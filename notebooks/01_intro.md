@@ -1,6 +1,3 @@
-# === Notebook 1: Electron Tracks in TPCs: Intro & Basic Plotting ===
-
-````markdown
 # Electron Tracks in Time Projection Chambers (TPCs)
 
 **Goal**:  
@@ -298,5 +295,4 @@ You're now ready to build ML models to predict track direction and origin!
 
 ```
 
----
-```
+
