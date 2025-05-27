@@ -75,7 +75,7 @@ git clone https://github.com/bahrudint/gamma25.git
 cd gamma25
 pip install -U -r requirements.txt
 ```
-and to install only Gampy (included in the above)
+and the run the below to install Gampy (make sure to be in the gamma25 folder)
 
 ```bash
 git clone https://github.com/tashutt/Gampy.git
