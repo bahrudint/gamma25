@@ -1,1 +1,92 @@
-# gamma25
+# Electron Track Analysis 2025 — GammaTPC ML Study
+
+Welcome to the central hub for our collaborative effort to study **electron tracks above 100 keV** in the **GammaTPC/GAMPix detector** using analytical methods and machine learning techniques.
+
+This work builds on the concepts and detector technology described in:
+- [GammaTPC Concept Paper](https://arxiv.org/abs/2502.14841)
+- [Probabilistic Deep Learning for Electron Tracks in LArTPC](https://arxiv.org/abs/2207.07805)
+- [GAMPix Readout System](https://arxiv.org/abs/2402.00902)
+
+---
+
+## 🔍 Purpose
+
+This repository supports a focused research study in **Summer–Fall 2025**, involving:
+
+- **Sam Jett** (lead ML developer)
+- **Two Bosnian students** (online research interns)
+- **Project lead**: Bahrudin Trbalić
+
+Our aim is to improve reconstruction and understanding of **electron track head location** and **initial direction**, especially in the **Compton** and **Pair Production** regimes (> 0.1 MeV).
+
+---
+
+## 🎯 Goals & Outcomes
+
+### Primary Objectives
+
+- ✅ Machine Learning models for:
+  - Head location (start of track)
+  - Initial direction vector
+- ✅ Separate studies for:
+  - **Compton regime**
+  - **Pair Production regime**
+
+These will lead to the:
+- ✅ Angular resolution and sensitivity estimation of GammaTPC
+- ✅ 2-3 Papers 
+
+### Bonus Explorations
+- Polarization sensitivity
+- Effects of drift length, readout pitch, and energy
+- Scattering path reconstruction, energy estimation from that
+- Reconstruction optimization (CKD, permutation handling)
+
+---
+
+## 📆 Timeline
+
+| Period | Milestone |
+|--------|-----------|
+| June (Weeks 1–2) | Onboarding, setup, Hello-world notebooks |
+| June (end) | Plan large-scale ML study |
+| July–August | Model training, validation, and refinement |
+| September | Final results + draft and submit 2 papers |
+| Oct–Dec | Continued dev, optimization, bonus tasks |
+
+---
+
+## 🧠 Structure of This Repo
+
+```bash
+gamma25/
+├── README.md               # You're here!
+├── docs/                   # Project documentation, slide decks, diagrams
+├── notebooks/              # Jupyter notebooks (visualization, modeling, etc.)
+├── scripts/                # Helper scripts for data processing and experiments
+├── models/                 # Trained models, architecture definitions
+├── data/                   # Track samples or links to datasets
+└── tutorials/              # Onboarding material and guided walkthroughs
+```
+
+### Setup with:
+```bash
+git clone https://github.com/tashutt/gamma25.git
+cd gamma25
+pip install -r requirements.txt
+```
+
+## 🧪 Getting Started
+
+If you're new to this repo, begin here:
+```bash
+    tutorials/00_intro_to_GammaTPC.ipynb — Overview of detector & track physics
+    notebooks/01_visualize_tracks.ipynb — Load and visualize 3D tracks
+    notebooks/02_analytic_head_direction.ipynb — Analytical methods for head/direction
+    notebooks/03_ml_baseline.ipynb — Simple ML baseline for head prediction
+```
+
+
+## ✍️ Publications (Planned)
+    📄 Electron Track Imaging at High Energy Using ML in GammaTPC
+    📄 Sensitivity of GammaTPC in the Pair Production Regime
