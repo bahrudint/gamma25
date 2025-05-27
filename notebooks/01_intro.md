@@ -21,11 +21,12 @@ This notebook helps you explore the raw data and build an intuition for track sh
 
 ```
 
-example\_data/
+example_data/
 └── electrons/
 ├── E0000100/   ← 100 keV
 ├── E0001000/   ← 1 MeV
 └── E0050000/   ← 5 MeV
+...
 
 ````
 
@@ -43,7 +44,7 @@ import glob
 import pickle
 import numpy as np
 import matplotlib.pyplot as plt
-from . import tracks_tools
+from Gampy.tools import tracks_tools
 ````
 
 ---
