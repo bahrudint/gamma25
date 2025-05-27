@@ -1,0 +1,27 @@
+awkward==2.5.1
+awkward-cpp==27
+h5py==3.11.0
+joblib==1.4.2
+matplotlib==3.8.2
+numpy==1.26.4
+pandas==2.2.3
+PyQt5==5.15.11
+PyQt5-Qt5==5.15.2
+PyQt5_sip==12.15.0
+pytz==2023.3.post1
+pywin32==305.1
+PyYAML==6.0.1
+scikit-learn==1.5.2
+scipy==1.15.2
+seaborn==0.13.0
+sympy==1.13.1
+tensorboard==2.17.1
+tensorboard-data-server==0.7.2
+tensorflow==2.17.0
+tensorflow-intel==2.17.0
+tensorflow-io-gcs-filesystem==0.31.0
+toml==0.10.2
+torch==2.6.0
+
+# Install Gampy directly from GitHub
+git+https://github.com/tashutt/Gampy.git
