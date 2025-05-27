@@ -74,7 +74,6 @@ total_electrons = ___
 print(f"Total electrons: {total_electrons}")
 ```
 
-**Hint**: Use `charges.sum()`.
 
 ---
 
@@ -88,14 +87,10 @@ You've learned:
 
 Next, you'll learn about clustering and identifying the track head!
 
-````
-
----
 
 # === Notebook 2: Clustering & Identifying the Electron Track Head ===
 
-```markdown
-# Electron Track Analysis: Clustering and Track Head Identification
+## Electron Track Analysis: Clustering and Track Head Identification
 
 **Goal**:  
 Learn to use clustering (DBSCAN) to identify important track features.
@@ -191,14 +186,11 @@ You've learned:
 
 Next, you'll simulate drift and understand TPC readout better!
 
-````
-
----
 
 # === Notebook 3: Simulating Drift and TPC Readout ===
 
-```markdown
-# Electron Tracks: Drift Simulation & TPC Readout
+
+## Electron Tracks: Drift Simulation & TPC Readout
 
 **Goal**:  
 Understand electron drift in TPCs and its effect on track data.
@@ -293,6 +285,5 @@ You've learned:
 
 You're now ready to build ML models to predict track direction and origin!
 
-```
 
 
