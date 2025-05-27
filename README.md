@@ -71,7 +71,7 @@ gamma25/
 
 ### Setup with:
 ```bash
-git clone https://github.com/tashutt/gamma25.git
+git clone https://github.com/bahrudint/gamma25.git
 cd gamma25
 pip install -r requirements.txt
 ```
