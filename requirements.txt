@@ -12,6 +12,3 @@ seaborn==0.13.0
 sympy==1.13.1
 toml==0.10.2
 tqdm
-
-# Install Gampy directly from GitHub
-git+https://github.com/tashutt/Gampy.git
