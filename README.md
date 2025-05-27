@@ -65,7 +65,7 @@ gamma25/
 ├── notebooks/              # Jupyter notebooks (visualization, modeling, etc.)
 ├── scripts/                # Helper scripts for data processing and experiments
 ├── models/                 # Trained models, architecture definitions
-├── data/                   # Track samples or links to datasets
+├── example_data/           # Track samples or links to datasets
 └── tutorials/              # Onboarding material and guided walkthroughs
 ```
 
