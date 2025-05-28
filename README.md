@@ -77,7 +77,7 @@ pip install -e .
 
 If you're new to this repo, begin here:
 ```bash
-    notebooks/01_visualize_tracks.md — Load and visualize 3D tracks
+    notebooks/01_intro.md — Load and visualize 3D tracks
     notebooks/02_analytic_head_direction.md — Analytical methods for head/direction
     notebooks/03_ml_baseline.md — Simple ML baseline for head prediction
 ```
