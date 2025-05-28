@@ -51,6 +51,10 @@ from Gampy.tools import tracks_tools
 
 ## 📦 Load a Track
 
+**First**: Go and explore the file structure and the naming conventions. Each E00###### has 10 .npz and .pickle files
+.npz files contain the raw track information (3D positions and charge)
+.pickle files contain "Truth" information i.e. what created them, where was the first interaction, what angle it came from etc. 
+
 ```python
 # Choose one electron track file
 folder = 'example_data/electrons/E0001000'
@@ -59,13 +63,9 @@ track_file = glob.glob(os.path.join(folder, 'TrackE*.npz'))[0]
 # Extract energy from filename (in keV)
 energy = int(track_file.split("TrackE")[1].split("_")[0])
 
-# Initialize the Track object
+# Initialize the Track object (this will load the npz and pickle file) 
 track = tracks_tools.Tracks(track_file.rstrip('.npz'))
-
-# Load associated truth data
-truth_file = track_file.replace('.npz', '.pickle').replace('.c.pickle', '.pickle')
-with open(truth_file, 'rb') as f:
-    truth = pickle.load(f)['truth']
+truth = track.truth
 ```
 
 ---
