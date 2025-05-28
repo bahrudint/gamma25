@@ -3,21 +3,16 @@
 Welcome to the central hub for our collaborative effort to study **electron tracks above 100 keV** in the **GammaTPC/GAMPix detector** using analytical methods and machine learning techniques.
 
 This work builds on the concepts and detector technology described in:
-- [GammaTPC Concept Paper](https://arxiv.org/abs/2502.14841)
-- [Probabilistic Deep Learning for Electron Tracks in LArTPC](https://arxiv.org/abs/2207.07805)
-- [GAMPix Readout System](https://arxiv.org/abs/2402.00902)
+- [GammaTPC Concept Paper](https://arxiv.org/abs/2502.14841) _skim this paper, look at images_
+- [Probabilistic Deep Learning for Electron Tracks in LArTPC](https://arxiv.org/abs/2207.07805) _this one is important and it will be the basis of our study_
+- [GAMPix Readout System](https://arxiv.org/abs/2402.00902) _this one explains track properties and our readout methods_ 
 
 ---
 
 ## 🔍 Purpose
 
 This repository supports a focused research study in **Summer–Fall 2025**
-
 Our aim is to improve reconstruction and understanding of **electron track head location** and **initial direction**, especially in the **Compton** and **Pair Production** regimes (> 0.1 MeV).
-
----
-
-## 🎯 Goals & Outcomes
 
 ### Primary Objectives
 
@@ -62,7 +57,6 @@ gamma25/
 ├── scripts/                # Helper scripts for data processing and experiments
 ├── models/                 # Trained models, architecture definitions
 ├── example_data/           # Track samples or links to datasets
-└── tutorials/              # Onboarding material and guided walkthroughs
 ```
 
 ### Setup with:
@@ -83,10 +77,9 @@ pip install -e .
 
 If you're new to this repo, begin here:
 ```bash
-    tutorials/00_intro_to_GammaTPC.ipynb — Overview of detector & track physics
-    notebooks/01_visualize_tracks.ipynb — Load and visualize 3D tracks
-    notebooks/02_analytic_head_direction.ipynb — Analytical methods for head/direction
-    notebooks/03_ml_baseline.ipynb — Simple ML baseline for head prediction
+    notebooks/01_visualize_tracks.md — Load and visualize 3D tracks
+    notebooks/02_analytic_head_direction.md — Analytical methods for head/direction
+    notebooks/03_ml_baseline.md — Simple ML baseline for head prediction
 ```
 
 
