@@ -121,17 +121,9 @@ plt.show()
 
 ---
 
-## 🧠 Challenge 1 — Compare Charge
+## 🧠 Challenge 1 — Show the origin and initial direction using truth data
 
-```python
-total_charge_data = charges.sum()
-total_charge_truth = truth['num_electrons']
-
-print(f"Track-integrated charge: {total_charge_data:.1f} e⁻")
-print(f"Truth label charge:      {total_charge_truth:.1f} e⁻")
-```
-
-* Are the values close? Why might there be a discrepancy?
+[] :)
 
 ---
 
@@ -165,6 +157,8 @@ plt.show()
 * How does the spatial extent change?
 * Do higher energies result in longer or more branched tracks?
 
+b) Plot the total average charge [Q] vs the energy [in keV]. Use all the available energies in the electron folder. 
+
 ---
 
 ## 🧠 Challenge 3 — Track Extent
@@ -176,8 +170,9 @@ extent = positions.max(axis=0) - positions.min(axis=0)
 print(f"Track extent (X, Y, Z): {extent} meters")
 ```
 
-* Which direction has the most spread?
-* Why is that relevant for direction-finding tasks?
+Generalize this to find the "Bounding Radius"
+
+b) Plot the average extent [in mm] vs the energy [in keV]. Use all the available energies in the electron folder. 
 
 ---
 
