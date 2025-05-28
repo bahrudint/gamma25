@@ -65,7 +65,19 @@ energy = int(track_file.split("TrackE")[1].split("_")[0])
 
 # Initialize the Track object (this will load the npz and pickle file) 
 track = tracks_tools.Tracks(track_file.rstrip('.npz'))
-truth = track.truth
+```
+
+At this point it is good to explore the attributes of the Track object.  
+```python
+print(dict(track.__dict__).keys())
+```
+For each attribute, explore the keys it has and gat familiar with their meaning, for example:
+```python
+print(track.truth.keys())
+```
+Documentation about the Track class can be found here:
+```
+https://github.com/tashutt/Gampy/blob/main/tools/tracks_tools.py
 ```
 
 ---
@@ -73,6 +85,7 @@ truth = track.truth
 ## 🔎 Examine Track Properties
 
 ```python
+truth = track.truth
 positions = track.raw['r'].T                # shape: (N, 3)
 charges = track.raw['num_e']                # shape: (N,)
 
