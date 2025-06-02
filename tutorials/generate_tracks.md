@@ -6,6 +6,7 @@ All relevant files are located in:
 ```
 /sdf/group/kipac/users/gammaTPC/GenTracks
 ```
+*navigate there*
 
 ## 🧠 Overview
 
@@ -68,6 +69,9 @@ This will:
 * Submit jobs via SLURM automatically.
 
 ---
+
+*Move the output to your desired loaction*
+
 
 ## 📁 Output
 
