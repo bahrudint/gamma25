@@ -49,6 +49,7 @@ TRACK_CONFIGS = [
     {'energy': 100, 'num_tracks': 100},
     {'energy': 300, 'num_tracks': 100},
     # Add more energy configurations here
+    # energy is in keV
 ]
 ```
 
