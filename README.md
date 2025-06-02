@@ -54,7 +54,7 @@ gamma25/
 ├── README.md               # You're here!
 ├── docs/                   # Project documentation, slide decks, diagrams
 ├── notebooks/              # Jupyter notebooks (visualization, modeling, etc.)
-├── scripts/                # Helper scripts for data processing and experiments
+├── tutorials/              # Quick guides to do stuff
 ├── models/                 # Trained models, architecture definitions
 ├── example_data/           # Track samples or links to datasets
 ```
