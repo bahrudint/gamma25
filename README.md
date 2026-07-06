@@ -1,4 +1,4 @@
-# Electron Track Analysis 2025 — GammaTPC ML Study
+# Electron Track Analysis 2026 — GammaTPC ML Study
 
 Welcome to the central hub for our collaborative effort to study **electron tracks above 100 keV** in the **GammaTPC/GAMPix detector** using analytical methods and machine learning techniques.
 
